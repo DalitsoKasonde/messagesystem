@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Inbox</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,18 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    @if (count($messages) > 0)
+                        <ul class="list-group">
+                            @foreach ($messages as $message)
+                                <li class="list-group-item">
+                                    From: <strong> {{ $message->userFrom->name }} , {{ $message->userFrom->email }} </strong> | Subject: {{ $message->subject }}
+                                </li>
+                            @endforeach
+                        </ul>
+
+                    @else
+                        No messages!
+                    @endif
                 </div>
             </div>
         </div>
