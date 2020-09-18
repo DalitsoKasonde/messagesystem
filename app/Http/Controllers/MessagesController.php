@@ -22,7 +22,7 @@ class MessagesController extends Controller
         return view('home')->with('messages', $messages);
     }
 
-    public function create() {
+    public function create(int $id = 0) {
         $users = User::where('id', '!=', Auth::id())->get();
 
         return view('create')->with('users', $users);
@@ -49,6 +49,12 @@ class MessagesController extends Controller
         $messages = Message::with('userTo')->where('user_id_from', Auth::id())->get();
 
         return view('sent')->with('messages', $messages);
+    }
+
+    public function read(int $id) {
+        $message = Message::with('userFrom')->find($id);
+
+        return view('read')->with('message', $message);
     }
 }
 
